@@ -14,6 +14,46 @@ import (
 	"github.com/wxd237/ooxml/xml"
 )
 
+type WordBase struct {
+}
+
+func (this *WordBase) MarshalXMLAttr(xml.Name) (xml.Attr, err) {
+
+}
+
+// cur hand body
+type WordBody struct {
+	XMLName     xml.Name          `xml:"body"`
+	P           []WordP           `xml:"p"`
+	Tbl         []WordTbl         `xml:"tbl"`
+	BookmarkEnd []WordBookmarkEnd `xml:"bookmarkEnd"`
+	SectPr      WordSectPr        `xml:"sectPr"`
+}
+
+// cur hand document
+type WordDocument struct {
+	XMLName       xml.Name `xml:"document"`
+	Body          WordBody `xml:"body"`
+	V             string   `xml:"xmlns v,attr"`
+	Ignorable     string   `xml:"Ignorable,attr"`
+	Wpc           string   `xml:"wpc,attr"`
+	O             string   `xml:"o,attr"`
+	W14           string   `xml:"w14,attr"`
+	W10           string   `xml:"w10,attr"`
+	W15           string   `xml:"w15,attr"`
+	Wpg           string   `xml:"wpg,attr"`
+	Wne           string   `xml:"wne,attr"`
+	Wps           string   `xml:"wps,attr"`
+	WpsCustomData string   `xml:"wpsCustomData,attr"`
+	Mc            string   `xml:"mc,attr"`
+	Wp14          string   `xml:"wp14,attr"`
+	Wp            string   `xml:"wp,attr"`
+	W             string   `xml:"w,attr"`
+	Wpi           string   `xml:"wpi,attr"`
+	R             string   `xml:"r,attr"`
+	M             string   `xml:"m,attr"`
+}
+
 // cur hand color
 type WordColor struct {
 	XMLName xml.Name `xml:"color"`
@@ -513,30 +553,6 @@ type WordCols struct {
 	Num     string   `xml:"num,attr"`
 }
 
-// cur hand document
-type WordDocument struct {
-	XMLName       xml.Name `xml:"document"`
-	Body          WordBody `xml:"body"`
-	V             string   `xml:"v,attr"`
-	Ignorable     string   `xml:"Ignorable,attr"`
-	Wpc           string   `xml:"wpc,attr"`
-	O             string   `xml:"o,attr"`
-	W14           string   `xml:"w14,attr"`
-	W10           string   `xml:"w10,attr"`
-	W15           string   `xml:"w15,attr"`
-	Wpg           string   `xml:"wpg,attr"`
-	Wne           string   `xml:"wne,attr"`
-	Wps           string   `xml:"wps,attr"`
-	WpsCustomData string   `xml:"wpsCustomData,attr"`
-	Mc            string   `xml:"mc,attr"`
-	Wp14          string   `xml:"wp14,attr"`
-	Wp            string   `xml:"wp,attr"`
-	W             string   `xml:"w,attr"`
-	Wpi           string   `xml:"wpi,attr"`
-	R             string   `xml:"r,attr"`
-	M             string   `xml:"m,attr"`
-}
-
 // cur hand pPr
 type WordPPr struct {
 	XMLName xml.Name `xml:"pPr"`
@@ -794,15 +810,6 @@ type WordSectPr struct {
 	DocGrid         WordDocGrid           `xml:"docGrid"`
 }
 
-// cur hand body
-type WordBody struct {
-	XMLName     xml.Name          `xml:"body"`
-	P           []WordP           `xml:"p"`
-	Tbl         []WordTbl         `xml:"tbl"`
-	BookmarkEnd []WordBookmarkEnd `xml:"bookmarkEnd"`
-	SectPr      WordSectPr        `xml:"sectPr"`
-}
-
 // cur hand lang
 type WordLang struct {
 	XMLName xml.Name `xml:"lang"`
@@ -1018,13 +1025,16 @@ func EncodeWord(v interface{}, prefix string) string {
 }
 
 func DecodeWord(filename string) *WordDocument {
+
 	content, err := ioutil.ReadFile(filename)
 	var v WordDocument
 	//fmt.Printf("%s\n", string(content))
+
 	err = xml.Unmarshal(content, &v)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%+v\n", v)
+	fmt.Printf("%+v\n", v.W)
 	return &v
+
 }
