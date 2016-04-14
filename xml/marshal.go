@@ -130,6 +130,44 @@ type Encoder struct {
 	p printer
 }
 
+func (t *Encoder) SetNS() {
+	t.p.attrNS = map[string]string{
+		"wpc":  "http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
+		"mc":   "http://schemas.openxmlformats.org/markup-compatibility/2006",
+		"o":    "urn:schemas-microsoft-com:office:office",
+		"r":    "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+		"m":    "http://schemas.openxmlformats.org/officeDocument/2006/math",
+		"v":    "urn:schemas-microsoft-com:vml",
+		"wp14": "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing",
+		"wp":   "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+		"w10":  "urn:schemas-microsoft-com:office:word",
+		"w":    "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+		"w14":  "http://schemas.microsoft.com/office/word/2010/wordml",
+		"wpg":  "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
+		"wpi":  "http://schemas.microsoft.com/office/word/2010/wordprocessingInk",
+		"wne":  "http://schemas.microsoft.com/office/word/2006/wordml",
+		"wps":  "http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
+	}
+
+	t.p.attrPrefix = map[string]string{
+		"http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas":     "wpc",
+		"http://schemas.openxmlformats.org/markup-compatibility/2006":            "mc",
+		"urn:schemas-microsoft-com:office:office":                                "o",
+		"http://schemas.openxmlformats.org/officeDocument/2006/relationships":    "r",
+		"http://schemas.openxmlformats.org/officeDocument/2006/math":             "m",
+		"urn:schemas-microsoft-com:vml":                                          "v",
+		"http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing":    "wp14",
+		"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing": "wp",
+		"urn:schemas-microsoft-com:office:word":                                  "w10",
+		"http://schemas.openxmlformats.org/wordprocessingml/2006/main":           "w",
+		"http://schemas.microsoft.com/office/word/2010/wordml":                   "w14",
+		"http://schemas.microsoft.com/office/word/2010/wordprocessingGroup":      "wpg",
+		"http://schemas.microsoft.com/office/word/2010/wordprocessingInk":        "wpi",
+		"http://schemas.microsoft.com/office/word/2006/wordml":                   "wne",
+		"http://schemas.microsoft.com/office/word/2010/wordprocessingShape":      "wps",
+	}
+}
+
 // NewEncoder returns a new encoder that writes to w.
 func NewEncoder(w io.Writer) *Encoder {
 	e := &Encoder{printer{Writer: bufio.NewWriter(w)}}
@@ -311,7 +349,9 @@ type printer struct {
 // createAttrPrefix finds the name space prefix attribute to use for the given name space,
 // defining a new prefix if necessary. It returns the prefix.
 func (p *printer) createAttrPrefix(url string) string {
+
 	if prefix := p.attrPrefix[url]; prefix != "" {
+
 		return prefix
 	}
 
@@ -662,13 +702,12 @@ func (p *printer) writeStart(start *StartElement) error {
 
 	p.writeIndent(1)
 	p.WriteByte('<')
-	p.WriteString(start.Name.Local)
-
 	if start.Name.Space != "" {
-		p.WriteString(` xmlns="`)
-		p.EscapeString(start.Name.Space)
-		p.WriteByte('"')
+
+		p.WriteString(p.attrPrefix[start.Name.Space])
+		p.WriteByte(':')
 	}
+	p.WriteString(start.Name.Local)
 
 	// Attributes
 	for _, attr := range start.Attr {
@@ -708,6 +747,10 @@ func (p *printer) writeEnd(name Name) error {
 	p.writeIndent(-1)
 	p.WriteByte('<')
 	p.WriteByte('/')
+	if name.Space != "" {
+		p.WriteString(p.attrPrefix[name.Space])
+		p.WriteByte(':')
+	}
 	p.WriteString(name.Local)
 	p.WriteByte('>')
 	p.popPrefix()
