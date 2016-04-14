@@ -7,10 +7,12 @@ thanks seb-nyberg
 package ooxml
 
 import (
-	"bytes"
+	"bufio"
+
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/wxd237/ooxml/xml"
 )
@@ -33,17 +35,25 @@ func (m *mystring) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 }
 
 //add w: to every line
-func EncodeWord(v interface{}, prefix string) string {
+func EncodeWord(v interface{}, filename string) string {
+	f, err := os.Create(filename)
 
-	var b bytes.Buffer
-	enc := xml.NewEncoder(&b)
+	w := bufio.NewWriter(f)
+
+	if err == nil {
+		log.Fatal(err)
+	}
+
+	enc := xml.NewEncoder(w)
 	enc.Indent(" ", " ")
 	enc.SetNS()
 	if err := enc.Encode(v); err != nil {
 		log.Fatal(err)
 	}
+	f.Sync()
+	w.Flush()
 
-	return b.String()
+	return ""
 
 }
 

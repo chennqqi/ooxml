@@ -24,7 +24,7 @@ func TestDecodeWord(t *testing.T) {
 }
 
 func TestEncodeWord(t *testing.T) {
-	rst := EncodeWord(word, "")
+	rst := EncodeWord(word, "./test/1.xml")
 	fmt.Printf("%s\n", rst)
 
 }
