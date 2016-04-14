@@ -15,16 +15,29 @@ import (
 )
 
 type WordBase struct {
+	
 }
 
-func (this *WordBase) MarshalXMLAttr(xml.Name) (xml.Attr, err) {
+var _ xml.MarshalerAttr = (*WordBase)(nil)
 
+func (this *WordBase) MarshalXMLAttr(n xml.Name) (xml.Attr, error) {
+	return xml.Attr{n, "hello world"}, nil
+}
+
+
+func (m *WordBase) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	
+	e.EncodeToken(start)
+	e.EncodeToken(xml.CharData([]byte("haha")))
+	e.EncodeToken(xml.EndElement{start.Name})
+	return nil
 }
 
 // cur hand body
 type WordBody struct {
+	WordBase
 	XMLName     xml.Name          `xml:"body"`
-	P           []WordP           `xml:"p"`
+	P           []WordP           `xml:"w p"`
 	Tbl         []WordTbl         `xml:"tbl"`
 	BookmarkEnd []WordBookmarkEnd `xml:"bookmarkEnd"`
 	SectPr      WordSectPr        `xml:"sectPr"`
@@ -32,12 +45,12 @@ type WordBody struct {
 
 // cur hand document
 type WordDocument struct {
-	XMLName       xml.Name `xml:"document"`
+	XMLName       xml.Name `xml:"http://schemas.openxmlformats.org/wordprocessingml/2006/main document"`
 	Body          WordBody `xml:"body"`
 	V             string   `xml:"xmlns v,attr"`
 	Ignorable     string   `xml:"Ignorable,attr"`
 	Wpc           string   `xml:"wpc,attr"`
-	O             string   `xml:"o,attr"`
+	O             string   `xml:"xmlns o,attr"`
 	W14           string   `xml:"w14,attr"`
 	W10           string   `xml:"w10,attr"`
 	W15           string   `xml:"w15,attr"`

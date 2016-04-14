@@ -1,9 +1,11 @@
 package ooxml
 
 import (
+	"log"
 	"fmt"
 	//"fmt"
 	"testing"
+	"github.com/juju/xml"
 )
 
 func TestParserxml(t *testing.T) {
@@ -22,7 +24,14 @@ func TestDecodeWord(t *testing.T) {
 }
 
 func TestEncodeWord(t *testing.T) {
-	rst := EncodeWord(word, "")
-	fmt.Printf("%s\n", rst)
+	
+	//rst := EncodeWord(word, "")
+	//fmt.Printf("%s\n", rst)
+	b, err := xml.MarshalIndent(word, " ", " ")
+	if err != nil {
+		
+		log.Fatal(err)
+	}
+	fmt.Printf("%s\n", b)
 
 }
