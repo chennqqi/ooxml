@@ -56,6 +56,9 @@ type CT_PageSz struct {
 
 //w:sectPr
 type CT_SectPr struct {
+	PageSz   CT_PageSz
+	PageMar  CT_PageMar
+	SectType CT_SectType
 }
 
 //w:type
@@ -174,6 +177,7 @@ type CT_Fonts struct {
 
 //w:rPr
 type CT_RPr struct {
+	RStyle CT_String `xml:"rStyle"`
 }
 
 //w:sz
