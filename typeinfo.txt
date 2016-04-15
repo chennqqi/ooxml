@@ -1,0 +1,186 @@
+//w:abstractNumId
+type CT_DecimalNumber struct {
+}
+
+//w:ilvl
+type CT_DecimalNumber struct {
+}
+
+//w:startOverride
+type CT_DecimalNumber struct {
+}
+
+
+//wp:docPr
+type CT_NonVisualDrawingProps struct {
+}
+
+//w:name
+type CT_String struct {
+}
+
+//w:next
+type CT_String struct {
+}
+
+
+//w:b
+type CT_OnOff struct {
+}
+
+//w:bCs
+type CT_OnOff struct {
+}
+
+//w:caps
+type CT_OnOff struct {
+}
+
+
+
+//w:cs
+type CT_OnOff struct {
+}
+
+//w:dstrike
+type CT_OnOff struct {
+}
+
+//w:emboss
+type CT_OnOff struct {
+}
+
+//w:i
+type CT_OnOff struct {
+}
+
+//w:iCs
+type CT_OnOff struct {
+}
+
+//w:imprint
+type CT_OnOff struct {
+}
+
+//w:noProof
+type CT_OnOff struct {
+}
+
+//w:oMath
+type CT_OnOff struct {
+}
+
+//w:outline
+type CT_OnOff struct {
+}
+
+
+//w:unhideWhenUsed
+type CT_OnOff struct {
+}
+
+//w:bidiVisual
+type CT_OnOff struct {
+}
+
+
+//w:rtl
+type CT_OnOff struct {
+}
+
+//w:shadow
+type CT_OnOff struct {
+}
+
+//w:smallCaps
+type CT_OnOff struct {
+}
+
+//w:snapToGrid
+type CT_OnOff struct {
+}
+
+//w:specVanish
+type CT_OnOff struct {
+}
+
+//w:strike
+type CT_OnOff struct {
+}
+
+
+
+//w:webHidden
+type CT_OnOff struct {
+}
+//w:keepLines
+type CT_OnOff struct {
+}
+
+//w:keepNext
+type CT_OnOff struct {
+}
+
+//w:pageBreakBefore
+type CT_OnOff struct {
+}
+
+
+
+//w:vanish
+type CT_OnOff struct {
+}
+//w:rStyle
+type CT_String struct {
+}
+
+//w:locked
+type CT_OnOff struct {
+}
+
+//w:qFormat
+type CT_OnOff struct {
+}
+
+//w:semiHidden
+type CT_OnOff struct {
+}
+
+//w:vanish
+type CT_OnOff struct {
+}
+
+//w:widowControl
+type CT_OnOff struct {
+}
+
+//w:basedOn
+type CT_String struct {
+}
+
+//w:tblStyle
+type CT_String struct {
+}
+
+//w:pStyle
+type CT_String struct {
+}
+//w:numId
+type CT_DecimalNumber struct {
+}
+
+//w:uiPriority
+type CT_DecimalNumber struct {
+}
+
+//w:gridSpan
+type CT_DecimalNumber struct {
+}
+
+//a:ext
+type CT_PositiveSize2D struct {
+}
+
+//wp:extent
+type CT_PositiveSize2D struct {
+}

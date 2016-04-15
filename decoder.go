@@ -14,7 +14,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/wxd237/ooxml/xml"
+	"encoding/xml"
 )
 
 type mystring string
@@ -40,13 +40,13 @@ func EncodeWord(v interface{}, filename string) string {
 
 	w := bufio.NewWriter(f)
 
-	if err == nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 
 	enc := xml.NewEncoder(w)
 	enc.Indent(" ", " ")
-	enc.SetNS()
+	//enc.SetNS()
 	if err := enc.Encode(v); err != nil {
 		log.Fatal(err)
 	}
@@ -57,17 +57,17 @@ func EncodeWord(v interface{}, filename string) string {
 
 }
 
-func DecodeWord(filename string) *WordDocument {
+func DecodeWord(filename string) *CT_Document {
 
 	content, err := ioutil.ReadFile(filename)
-	var v WordDocument
+	var v CT_Document
 	//fmt.Printf("%s\n", string(content))
 
 	err = xml.Unmarshal(content, &v)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%+v\n", v.W)
+	fmt.Printf("%+v\n", v)
 	return &v
 
 }
